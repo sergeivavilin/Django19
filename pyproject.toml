@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "django19"
+version = "0.1.0"
+description = ""
+authors = ["Sergei <vavilin.dev@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
