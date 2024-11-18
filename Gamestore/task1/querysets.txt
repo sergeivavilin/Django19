@@ -1,0 +1,32 @@
+python manage.py shell
+
+>>> from task1.models import Buyer, Game
+>>> 
+>>> 
+>>> Buyer.objects.create(name="Vasya",balance=4000.5000,age=16)
+<Buyer: Buyer object (1)>
+>>> Buyer.objects.all()
+<QuerySet [<Buyer: Buyer object (1)>]>
+>>> Buyer.objects.create(name="Petya",balance=1000,age=22)
+<Buyer: Buyer object (2)>
+>>> Buyer.objects.create(name="Masha",balance=99.04,age=72)
+<Buyer: Buyer object (3)>
+>>> 
+>>> 
+>>> Game.objects.create(title="Mario",cost=100,size=0.355, description="Geme of the year 1985")                
+<Game: Game object (1)>
+>>> Game.objects.create(title="Manhunt",cost=555,size=10.678, description="Survival horror 18+", age_limited=True)  
+<Game: Game object (2)>
+>>> Game.objects.create(title="The Witcher 3: Wild Hunt",cost=999.99,size=70.28, description="Action/RPG from CD Project RED", age_limited=True)  
+<Game: Game object (3)>
+>>> Game.objects.filter(id=1).update(description="Game of the year 1985")                                           
+1
+>>> 
+>>> 
+>>> Game.objects.get(id=1).buyer.set((Buyer.objects.get(id=1), Buyer.objects.get(id=2)))    
+>>> 
+>>> Game.objects.get(id=2).buyer.set(Buyer.objects.filter(age__gte=18))
+>>> Game.objects.get(id=3).buyer.set(Buyer.objects.filter(age__gte=18))
+>>>
+>>>
+                                
