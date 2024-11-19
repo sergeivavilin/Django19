@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+</head>
+
+<body>
+  {% block name_page %}
+  {% endblock %}
+  <nav>
+    {% block menu %}
+    <a href="/"><h2> Главная </h2></a>
+    <a href="/shop"><h2> Магазин &#128717;&#65039; </h2> </a>
+    <a href="/cart"><h2> Корзина &#128722; </h2> </a>
+  {% endblock %}
+  </nav>
+  {% block content %}
+  {% endblock %}
+</body>
