@@ -2,6 +2,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import UserRegister
 from .models import Buyer, Game
@@ -22,7 +23,7 @@ class ShopPage(TemplateView):
             'title': 'Игры',
             'games': games,
         }
-    except Game.DoesNotExist:
+    except ObjectDoesNotExist:
         extra_context = {
             'title': 'Игры',
         }
@@ -61,7 +62,7 @@ class SignUpPage(View):
             # Проверяем наличие пользователя в базе данных
             try:
                 user = Buyer.objects.filter(name=username).first()
-            except Buyer.DoesNotExist:
+            except ObjectDoesNotExist:
                 try:
                     Buyer.objects.create(name=username, age=age)
                 except Exception as e:
