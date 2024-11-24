@@ -14,8 +14,9 @@
                 <li> <h3>{{ game.title }} | {{ game.description }} | {{ game.cost }} руб. <button> Купить </button> </h3> </li>
             {% endfor %}
         </ul>
+        {% include 'task1/pagination.html'%}
     {% else %}
-        <h2>Игры закончились</h2>
+        <h2>{{ error }}</h2>
     {% endif %}
     <a href="/"> <button>  &#11013;&#65039; Вернуться на главную страницу </button> </a>
 {% endblock %}

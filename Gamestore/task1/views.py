@@ -1,8 +1,9 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 
 from .forms import UserRegister
 from .models import Buyer, Game
@@ -14,19 +15,28 @@ class MainPage(TemplateView):
         'title': 'Главная страница магазина',
     }
 
-
-class ShopPage(TemplateView):
+# Используем класс ListView для разделения списка объектов на страницы
+class ShopPage(ListView):
     template_name = 'task1/shop.html'
-    try:
-        games = Game.objects.all()
-        extra_context = {
-            'title': 'Игры',
-            'games': games,
-        }
-    except ObjectDoesNotExist:
-        extra_context = {
-            'title': 'Игры',
-        }
+    # Связываем используемую модель и шаблон
+    model = Game
+    # Количество элементов на странице
+    paginate_by = 1
+
+    def get_context_data(self, **kwargs):
+        # Создаем контекст для шаблона
+        context = super().get_context_data(**kwargs)
+
+        games = self.model.objects.all()
+        if not games:
+            context['error'] = 'Игры не найдены'
+        else:
+            paginator = Paginator(games, self.paginate_by)
+            page_number = self.request.GET.get('page')
+            games = paginator.get_page(page_number)
+            context['games'] = games
+            context['title'] = 'Игры'
+        return context
 
 
 class CartPage(TemplateView):
